@@ -1,0 +1,26 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">  
+<dom-module id="input-heading"> 
+    <template>
+         <!-- on-input is Polymer shorthand for addEventListener('input', ... )--> 
+        <input type="text" id="input" on-input="_handleInput" /> 
+        <div id="label"></div> 
+    </template> 
+</dom-module> 
+<script>
+    Polymer({
+        is: "input-heading",
+        properties: {
+            label: {
+                type: String,
+                observer: '_labelChanged'
+            }
+        },
+        _labelChanged: function(label) {
+            this.$.label.textContent = label;
+            this.$.input.value = label;
+        },
+        _handleInput: function(e) {
+            this.label = e.target.value;
+        }
+    });
+</script>

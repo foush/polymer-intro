@@ -1,0 +1,25 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">  
+<link rel="import" href="../todo-list/todo-list.html">
+<link rel="import" href="../list-menu/list-menu.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+  <dom-module id="list-manager"> 
+    <template> 
+        <iron-ajax url="/lists.json" id="list_ajax" auto></iron-ajax>
+        <paper-drawer-panel>
+            <list-menu drawer lists="{{lists}}" selected="{{list}}"></list-menu>
+            <todo-list id="list" main list="{{list}}"></todo-list>
+        </paper-drawer-panel>
+    </template>
+     </dom-module> 
+<script>
+    Polymer({
+        is: "list-manager",
+        listeners: {
+            'list_ajax.last-response-changed': '_onLastResponseChanged',
+        },
+        _onLastResponseChanged: function(ev, detail) {
+            this.set('lists', detail.value);
+        }
+    }) ;
+</script>

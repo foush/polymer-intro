@@ -1,0 +1,23 @@
+{
+  "name": "polymer-intro",
+  "version": "1.0.0",
+  "description": "To set up, you will need to run `npm install` followed by `bower install` (you will need to install bower if you do not already have it)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.ewr01.tumblr.net/foush/polymer-intro.git"
+  },
+  "keywords": [
+    "polymer"
+  ],
+  "author": "John Foushee",
+  "license": "MIT",
+  "dependencies": {
+    "connect": "^3.4.1",
+    "serve-static": "^1.10.2"
+  }
+}

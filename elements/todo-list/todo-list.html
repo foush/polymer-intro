@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">  
+<link rel="import" href="../input-heading/input-heading-2.html">
+<link rel="import" href="../shared-styles/shared-styles.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <dom-module id="todo-list"> 
+    <style is="custom-style" include="tumblr-shared-styles">
+        :host {
+            background-color: var(--primary-background-color);
+        }
+
+        paper-icon-button.add {
+            color: var(--paper-green-500);
+        }
+        paper-icon-button.add[disabled] {
+            color: var(--paper-green-50);
+        }
+    </style>
+    <template> 
+        <input-heading id="heading" label="{{list.name}}"></input-heading>
+        <template is="dom-repeat" items="{{list.tasks}}" as="task">
+            <paper-icon-item>
+                <paper-checkbox item-icon checked="{{task.complete}}"></paper-checkbox>
+                <div class="flex">{{task.name}}</div>
+            </paper-icon-item>
+        </template>
+        <paper-input label="New Task" value="{{newTask}}" on-keyup="_handleInput">
+            <paper-icon-button disabled="{{newTaskDisabled}}" suffix icon="add-circle" class="add" on-click="onPushTask"></paper-icon-button>
+        </paper-input>
+    </template>
+     </dom-module> 
+<script>
+    Polymer({
+        is: "todo-list",
+        properties: {
+            list: {
+                type: Object,
+                notify: true
+            },
+            newTaskDisabled: {
+                type: Boolean,
+                computed: '_onNewTaskChange(newTask)'
+            }
+        },
+        onPushTask: function() {
+            this._pushTask(this.newTask);
+        },
+        _onNewTaskChange: function(newTask) {
+            return !newTask || !newTask.length;
+        },
+        _handleInput: function(ev) {
+            if (ev.keyCode == 13) {
+                this._pushTask(this.newTask);
+            }
+        },
+        _pushTask: function(taskText) {
+            if (this.newTaskDisabled) {
+                return;
+            }
+            this.push('list.tasks', {name: taskText, complete: false});
+            this.set('newTask', '');
+        }
+    }) ;
+</script>

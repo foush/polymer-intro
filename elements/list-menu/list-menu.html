@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">  
+<link rel="import" href="../shared-styles/shared-styles.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+  <dom-module id="list-menu"> 
+    <style is="custom-style" include="tumblr-shared-styles"></style>
+    <template> 
+        <paper-toolbar> My Lists</paper-toolbar>
+        <paper-menu id="menu" selected="{{selectedIndex}}">
+            <template is="dom-repeat" items="{{lists}}" as="list">
+                <paper-item>{{list.name}}</paper-item>
+            </template>
+        </paper-menu>
+    </template>
+ </dom-module> 
+<script>
+    Polymer({
+        is: "list-menu",
+        properties: {
+            lists: {
+                type: Array
+            },
+            selected: {
+                type: Object,
+                computed: '_getItemFor(selectedIndex)',
+                notify: true
+            }
+        },
+        observers: ['_onLists(lists.length)'],
+        _onLists: function(len) {
+            this.$.menu.select(0);
+        },
+        _getItemFor: function(selectedIndex) {
+            return this.lists[selectedIndex];
+        }
+    }) ;
+</script>
